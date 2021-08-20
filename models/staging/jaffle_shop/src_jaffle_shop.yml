@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+ - name : jaffle_shop
+   description: A Clone of the database
+   database : DEMO_DB
+   tables : 
+    - name: customers
+      columns:
+        - name : id
+          description : Raw Customers Data
+          tests:
+            - unique
+            - not_null
+    - name: orders
+      loaded_at_field: _etl_loaded_at
+      freshness:
+        warn_after: {count: 12, period: hour}
+        error_after: {count: 22, period: hour}
+      columns:
+        - name: id
+          description: Raw Orders data
+          tests:
+            - unique
+            - not_null
